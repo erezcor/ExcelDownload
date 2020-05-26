@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static constants.SystemConstants.DOWNLOAD_FOLDER_PATH;
 import static utils.FileUtils.getLatestFileFromFolderByExtension;
 
 public class ExcelUtils {
@@ -41,7 +42,7 @@ public class ExcelUtils {
         return getExcelFileAsStringLists(new File(filePath));
     }
 
-    public static File getLatestExcelFileDownloaded(String downloadFolderPath) {
-        return getLatestFileFromFolderByExtension(downloadFolderPath, excelFileExtension);
+    public static File getLatestExcelFileDownloaded() {
+        return getLatestFileFromFolderByExtension(DOWNLOAD_FOLDER_PATH, excelFileExtension);
     }
 }

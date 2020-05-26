@@ -6,10 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class ChromeDownloadsTab extends BasePage {
-    final String SELECTOR = "body downloads-manager #downloadsList #frb0 #file-link";
+    final String FIRST_FILE_NAME_SELECTOR = "body downloads-manager #downloadsList #frb0 #file-link";
     Shadow shadowDOMfinder;
 
-    private WebElement firstDownloadInPage;
+    private WebElement firstDownload;
 
     @FindBy (tagName = "downloads-manager")
     private WebElement firstShadowDOM;
@@ -26,8 +26,6 @@ public class ChromeDownloadsTab extends BasePage {
     }
 
     public String getLatestDownloadFileName() {
-        String fileName = shadowDOMfinder.findElement(SELECTOR).getText();
-        closeTab();
-        return fileName;
+        return shadowDOMfinder.findElement(FIRST_FILE_NAME_SELECTOR).getText();
     }
 }

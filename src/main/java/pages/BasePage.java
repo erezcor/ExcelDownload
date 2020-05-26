@@ -53,7 +53,6 @@ public abstract class BasePage {
         switchToLastTab();
     }
 
-    // can combine lines 1+3 with javascript
     protected void openLinkInNewTab(String link) {
         openEmptyNewTab();
         switchToLastTab();
