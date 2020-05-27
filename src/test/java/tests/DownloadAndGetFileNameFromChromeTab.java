@@ -5,19 +5,19 @@ import org.junit.Test;
 import pages.ChromeDownloadsTab;
 import pages.HomePage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static constants.SystemConstants.DOWNLOAD_FOLDER_PATH;
+import static constants.SystemConstants.DOWNLOADS_DIRECTORY_PATH;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static utils.DownloadUtils.waitForFileToExist;
 import static utils.ExcelUtils.getExcelFileAsStringLists;
-import static utils.FileUtils.deleteFileAt;
-import static utils.FileUtils.waitForFileToExist;
 
 public class DownloadAndGetFileNameFromChromeTab extends BaseTest {
     String filePath;
-    String fileFolderPath = DOWNLOAD_FOLDER_PATH;
+    String fileFolderPath = DOWNLOADS_DIRECTORY_PATH;
 
     int MAXIMUM_SECONDS_TO_WAIT = 10;
     int HEADLINES_ROW_INDEX = 0;
@@ -29,12 +29,12 @@ public class DownloadAndGetFileNameFromChromeTab extends BaseTest {
         ChromeDownloadsTab chromeDownloadsTab = homePage.openChromeDownloadsTab();
         filePath = fileFolderPath + chromeDownloadsTab.getLatestDownloadFileName();
 
-        waitForFileToExist(filePath, MAXIMUM_SECONDS_TO_WAIT);
-        List<List<String>> excelTable = getExcelFileAsStringLists(filePath);
+        File excelFile = waitForFileToExist(filePath, MAXIMUM_SECONDS_TO_WAIT);
+        List<List<String>> excelTable = getExcelFileAsStringLists(excelFile);
 
         assertThat(excelTable.get(HEADLINES_ROW_INDEX).get(FIRST_NAME_COLUMN_INDEX), is("First Name"));
 
-        deleteFileAt(filePath);
+        excelFile.delete();
     }
 
 }

@@ -1,7 +1,6 @@
 package utils;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -12,8 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static constants.SystemConstants.DOWNLOAD_FOLDER_PATH;
+import static constants.SystemConstants.DOWNLOADS_DIRECTORY_PATH;
 import static utils.FileUtils.getLatestFileFromFolderByExtension;
+import static utils.FileUtils.getNumberOfFilesByExtensionFrom;
 
 public class ExcelUtils {
     private final static int FIRST_SHEET_INDEX = 0;
@@ -43,6 +43,10 @@ public class ExcelUtils {
     }
 
     public static File getLatestExcelFileDownloaded() {
-        return getLatestFileFromFolderByExtension(DOWNLOAD_FOLDER_PATH, excelFileExtension);
+        return getLatestFileFromFolderByExtension(DOWNLOADS_DIRECTORY_PATH, excelFileExtension);
+    }
+
+    public static int getNumberOfExcelFilesInDownloadsDirectory() {
+        return getNumberOfFilesByExtensionFrom(DOWNLOADS_DIRECTORY_PATH, excelFileExtension);
     }
 }

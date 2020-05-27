@@ -9,9 +9,9 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static utils.DownloadUtils.waitForDownloadsToFinish;
 import static utils.ExcelUtils.getExcelFileAsStringLists;
 import static utils.ExcelUtils.getLatestExcelFileDownloaded;
-import static utils.FileUtils.waitForDownloadsToFinish;
 
 public class DownloadWithoutKnowingFileName extends BaseTest {
     int MAXIMUM_SECONDS_TO_WAIT = 10;
