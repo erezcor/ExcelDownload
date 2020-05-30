@@ -1,7 +1,9 @@
 package tests;
 
+import exceptions.TimeoutException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import pages.ChromeDownloadsTab;
 import pages.HomePage;
 
@@ -24,7 +26,9 @@ public class DownloadAndGetFileNameFromChromeTab extends BaseTest {
     int FIRST_NAME_COLUMN_INDEX = 1;
 
     @Test
-    public void downloadExcelAndGetFileNameFromChrome() throws IOException, InvalidFormatException, InterruptedException {
+    public void downloadExcelAndGetFileNameFromChrome() throws IOException, InvalidFormatException, InterruptedException, TimeoutException {
+        driver.findElement(By.cssSelector(DOWNLOAD_BUTTON_SELECTOR)).click();
+
         HomePage homePage = new HomePage(driver);
         ChromeDownloadsTab chromeDownloadsTab = homePage.openChromeDownloadsTab();
         filePath = fileFolderPath + chromeDownloadsTab.getLatestDownloadFileName();

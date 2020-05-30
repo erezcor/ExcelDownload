@@ -1,5 +1,6 @@
 package utils;
 
+import exceptions.TimeoutException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
@@ -12,10 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static constants.SystemConstants.DOWNLOADS_DIRECTORY_PATH;
+import static java.lang.System.currentTimeMillis;
 import static utils.FileUtils.getLatestFileFromFolderByExtension;
 import static utils.FileUtils.getNumberOfFilesByExtensionFrom;
+import static utils.TimeoutUtils.*;
 
 public class ExcelUtils {
+    private static int MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP = 500;
     private final static int FIRST_SHEET_INDEX = 0;
     private static int HEADLINES_ROW_INDEX = 0;
     private final static String excelFileExtension = "xlsx";
@@ -48,5 +52,21 @@ public class ExcelUtils {
 
     public static int getNumberOfExcelFilesInDownloadsDirectory() {
         return getNumberOfFilesByExtensionFrom(DOWNLOADS_DIRECTORY_PATH, excelFileExtension);
+    }
+
+    public static void waitUntilExcelFileIsDownloaded(int numberOfExcelFilesBeforeDownload, int maximumSecondsToWait) throws InterruptedException, TimeoutException {
+        long timeWhenEnteredFunctionInMillis = currentTimeMillis();
+        while (!isExcelFileDownloadFinished(numberOfExcelFilesBeforeDownload) &&
+                !didMaximumTimePass(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
+            Thread.sleep(MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP);
+        }
+
+        if (didMaximumTimePass(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
+            throw new TimeoutException("Timed out in waitForDownloadToStart");
+        }
+    }
+
+    public static boolean isExcelFileDownloadFinished(int numberOfExcelFilesBeforeDownload) {
+        return getNumberOfExcelFilesInDownloadsDirectory() > numberOfExcelFilesBeforeDownload;
     }
 }

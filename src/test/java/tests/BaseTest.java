@@ -11,7 +11,7 @@ public class BaseTest {
     private final String DRIVER_PATH = "chromedriver.exe";
     private final String PAGE_URL = "https://file-examples.com/index.php/sample-documents-download/sample-xls-download/";
 
-    private String DOWNLOAD_BUTTON_SELECTOR = "#table-files > tbody > tr:nth-child(10) > td.text-right.file-link > a.btn.btn-orange.btn-outline.btn-xl.page-scroll.download-button";
+    protected String DOWNLOAD_BUTTON_SELECTOR = "#table-files > tbody > tr:nth-child(10) > td.text-right.file-link > a.btn.btn-orange.btn-outline.btn-xl.page-scroll.download-button";
 
     {
         System.setProperty("webdriver.chrome.driver", DRIVER_PATH);
@@ -22,8 +22,6 @@ public class BaseTest {
         driver = new ChromeDriver();
         driver.get(PAGE_URL);
         driver.manage().window().maximize();
-
-        driver.findElement(By.cssSelector(DOWNLOAD_BUTTON_SELECTOR)).click();
     }
 
     @After
