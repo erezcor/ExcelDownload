@@ -16,7 +16,7 @@ import static constants.SystemConstants.DOWNLOADS_DIRECTORY_PATH;
 import static java.lang.System.currentTimeMillis;
 import static utils.FileUtils.getLatestFileFromFolderByExtension;
 import static utils.FileUtils.getNumberOfFilesByExtensionFrom;
-import static utils.TimeoutUtils.*;
+import static utils.TimeoutUtils.didMaximumTimePass;
 
 public class ExcelUtils {
     private static int MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP = 500;
@@ -54,15 +54,17 @@ public class ExcelUtils {
         return getNumberOfFilesByExtensionFrom(DOWNLOADS_DIRECTORY_PATH, excelFileExtension);
     }
 
-    public static void waitUntilExcelFileIsDownloaded(int numberOfExcelFilesBeforeDownload, int maximumSecondsToWait) throws InterruptedException, TimeoutException {
+    public static void waitUntilExcelFileIsDownloaded(int numberOfExcelFilesInDownloadsDirectoryBeforeDownload,
+                                                      int maximumSecondsToWait) throws InterruptedException, TimeoutException {
         long timeWhenEnteredFunctionInMillis = currentTimeMillis();
-        while (!isExcelFileDownloadFinished(numberOfExcelFilesBeforeDownload) &&
+
+        while (!isExcelFileDownloadFinished(numberOfExcelFilesInDownloadsDirectoryBeforeDownload) &&
                 !didMaximumTimePass(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
             Thread.sleep(MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP);
         }
 
         if (didMaximumTimePass(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
-            throw new TimeoutException("Timed out in waitForDownloadToStart");
+            throw new TimeoutException("Maximum time timed out in waitUntilExcelFileIsDownloaded");
         }
     }
 

@@ -34,18 +34,4 @@ public class DownloadWithoutKnowingFileName extends BaseTest {
 
         excelFile.deleteOnExit();
     }
-
-    @Test
-    public void download2() throws InterruptedException, IOException, InvalidFormatException, TimeoutException {
-        driver.findElement(By.cssSelector(DOWNLOAD_BUTTON_SELECTOR)).click();
-        DownloadUtils.waitForDownloadToStart(MAXIMUM_SECONDS_TO_WAIT);
-        DownloadUtils.waitForDownloadsToFinish(MAXIMUM_SECONDS_TO_WAIT);
-
-        File excelFile = getLatestExcelFileDownloaded();
-        List<List<String>> excelTable = getExcelFileAsStringLists(excelFile);
-
-        assertThat(excelTable.get(HEADLINES_ROW_INDEX).get(FIRST_NAME_COLUMN_INDEX), is("First Name"));
-
-        excelFile.deleteOnExit();
-    }
 }
