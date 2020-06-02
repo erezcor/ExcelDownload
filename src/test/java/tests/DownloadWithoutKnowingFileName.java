@@ -1,10 +1,10 @@
 package tests;
 
+import entities.Worker;
 import exceptions.TimeoutException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import utils.DownloadUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,15 +22,16 @@ public class DownloadWithoutKnowingFileName extends BaseTest {
     @Test
     public void downloadExcelWithoutKnowingFileName() throws InterruptedException, IOException, InvalidFormatException, TimeoutException {
         int numberOfExcelFilesBeforeDownload = getNumberOfExcelFilesInDownloadsDirectory();
-
         driver.findElement(By.cssSelector(DOWNLOAD_BUTTON_SELECTOR)).click();
 
         waitUntilExcelFileIsDownloaded(numberOfExcelFilesBeforeDownload, MAXIMUM_SECONDS_TO_WAIT);
 
         File excelFile = getLatestExcelFileDownloaded();
         List<List<String>> excelTable = getExcelFileAsStringLists(excelFile);
+        List<Worker> workersList = getExcelFileAsWorkersList(excelFile);
 
         assertThat(excelTable.get(HEADLINES_ROW_INDEX).get(FIRST_NAME_COLUMN_INDEX), is("First Name"));
+        assertThat(workersList.get(HEADLINES_ROW_INDEX).getFirstName(), is("First Name"));
 
         excelFile.deleteOnExit();
     }

@@ -1,5 +1,6 @@
 package utils;
 
+import entities.Worker;
 import exceptions.TimeoutException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -14,9 +15,10 @@ import java.util.List;
 
 import static constants.SystemConstants.DOWNLOADS_DIRECTORY_PATH;
 import static java.lang.System.currentTimeMillis;
+import static java.util.stream.Collectors.toList;
 import static utils.FileUtils.getLatestFileFromFolderByExtension;
 import static utils.FileUtils.getNumberOfFilesByExtensionFrom;
-import static utils.TimeoutUtils.didMaximumTimePass;
+import static utils.TimeoutUtils.isMaximumTimeInFunctionPassed;
 
 public class ExcelUtils {
     private static int MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP = 500;
@@ -42,16 +44,12 @@ public class ExcelUtils {
         return excelTable;
     }
 
-    public static List<List<String>> getExcelFileAsStringLists(String filePath) throws IOException, InvalidFormatException {
-        return getExcelFileAsStringLists(new File(filePath));
+    public static List<Worker> getExcelFileAsWorkersList(File file) throws IOException, InvalidFormatException {
+        return getExcelFileAsStringLists(file).stream().map(Worker::new).collect(toList());
     }
 
     public static File getLatestExcelFileDownloaded() {
         return getLatestFileFromFolderByExtension(DOWNLOADS_DIRECTORY_PATH, excelFileExtension);
-    }
-
-    public static int getNumberOfExcelFilesInDownloadsDirectory() {
-        return getNumberOfFilesByExtensionFrom(DOWNLOADS_DIRECTORY_PATH, excelFileExtension);
     }
 
     public static void waitUntilExcelFileIsDownloaded(int numberOfExcelFilesInDownloadsDirectoryBeforeDownload,
@@ -59,16 +57,20 @@ public class ExcelUtils {
         long timeWhenEnteredFunctionInMillis = currentTimeMillis();
 
         while (!isExcelFileDownloadFinished(numberOfExcelFilesInDownloadsDirectoryBeforeDownload) &&
-                !didMaximumTimePass(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
+                !isMaximumTimeInFunctionPassed(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
             Thread.sleep(MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP);
         }
 
-        if (didMaximumTimePass(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
+        if (isMaximumTimeInFunctionPassed(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
             throw new TimeoutException("Maximum time timed out in waitUntilExcelFileIsDownloaded");
         }
     }
 
-    public static boolean isExcelFileDownloadFinished(int numberOfExcelFilesBeforeDownload) {
+    private static boolean isExcelFileDownloadFinished(int numberOfExcelFilesBeforeDownload) {
         return getNumberOfExcelFilesInDownloadsDirectory() > numberOfExcelFilesBeforeDownload;
+    }
+
+    public static int getNumberOfExcelFilesInDownloadsDirectory() {
+        return getNumberOfFilesByExtensionFrom(DOWNLOADS_DIRECTORY_PATH, excelFileExtension);
     }
 }

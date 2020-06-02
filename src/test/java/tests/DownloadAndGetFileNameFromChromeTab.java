@@ -14,8 +14,8 @@ import java.util.List;
 import static constants.SystemConstants.DOWNLOADS_DIRECTORY_PATH;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static utils.DownloadUtils.waitForFileToExist;
 import static utils.ExcelUtils.getExcelFileAsStringLists;
+import static utils.FileUtils.waitForFileToExist;
 
 public class DownloadAndGetFileNameFromChromeTab extends BaseTest {
     String filePath;
