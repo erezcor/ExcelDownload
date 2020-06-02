@@ -12,18 +12,21 @@ import static java.util.stream.Collectors.toList;
 import static utils.TimeoutUtils.isMaximumTimeInFunctionPassed;
 
 public class FileUtils {
+    // The name should be meaningful name that express the action it involved
     private static int MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP = 500;
+
+    // Did you use formatter?
 
     public static File waitForFileToExist(String filePath, int maximumSecondsToWait) throws InterruptedException, TimeoutException {
         File file = new File(filePath);
         long timeWhenEnteredFunctionInMillis = currentTimeMillis();
-        while (!file.exists() &&
-                !isMaximumTimeInFunctionPassed(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
+        while (!file.exists()) {
+            // Can use static import for sleep?
             Thread.sleep(MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP);
-        }
 
-        if (isMaximumTimeInFunctionPassed(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
-            throw new TimeoutException("Timed out in waitForDownloadToStart");
+            if (isMaximumTimeInFunctionPassed(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
+                throw new TimeoutException("Timed out in waitForDownloadToStart");
+            }
         }
 
         return file;
@@ -44,11 +47,12 @@ public class FileUtils {
     }
 
     private static List<File> sortFilesByDate(List<File> files) {
-       return files.stream().sorted(comparingLong(File::lastModified)).collect(toList());
+        return files.stream().sorted(comparingLong(File::lastModified)).collect(toList());
     }
 
     protected static File getLatestFileFromFolderByExtension(String folderPath, String extension) {
         List<File> filesSortedByDate = sortFilesByDate(getFilesByExtensionFrom(folderPath, extension));
+        // the last index can be extracted to method and then is the var needed for the list
         int lastFileIndex = filesSortedByDate.size() - 1;
         return filesSortedByDate.get(lastFileIndex);
     }

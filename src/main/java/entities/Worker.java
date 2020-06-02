@@ -17,6 +17,7 @@ public class Worker {
     private String date;
     private String id;
 
+    // Maybe use enum for the index
     private static int SERIAL_NUMBER_INDEX = 0;
     private static int FIRST_NAME_INDEX = 1;
     private static int LAST_NAME_INDEX = 2;

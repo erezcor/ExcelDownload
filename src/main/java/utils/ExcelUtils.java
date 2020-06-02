@@ -32,6 +32,7 @@ public class ExcelUtils {
         XSSFSheet excelSheet = new XSSFWorkbook(file).getSheetAt(FIRST_SHEET_INDEX);
 
         int lastColumnIndex = excelSheet.getRow(HEADLINES_ROW_INDEX).getLastCellNum() - 1;
+// Can it be converted to stream
 
         for (Row row : excelSheet) {
             excelTable.add(new ArrayList<>());
