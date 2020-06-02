@@ -12,10 +12,8 @@ import static java.util.stream.Collectors.toList;
 import static utils.TimeoutUtils.isMaximumTimeInFunctionPassed;
 
 public class FileUtils {
-    // The name should be meaningful name that express the action it involved
+    // Todo: the name should be meaningful name that express the action it involved
     private static int MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP = 500;
-
-    // Did you use formatter?
 
     public static File waitForFileToExist(String filePath, int maximumSecondsToWait) throws InterruptedException, TimeoutException {
         File file = new File(filePath);

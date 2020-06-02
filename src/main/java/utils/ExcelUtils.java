@@ -3,6 +3,7 @@ package utils;
 import entities.Worker;
 import exceptions.TimeoutException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -32,18 +33,23 @@ public class ExcelUtils {
         XSSFSheet excelSheet = new XSSFWorkbook(file).getSheetAt(FIRST_SHEET_INDEX);
 
         int lastColumnIndex = excelSheet.getRow(HEADLINES_ROW_INDEX).getLastCellNum() - 1;
-        // if use stream make a util convert iterator to stream
-        // Extract to method named stringFromCell and get excel sheet
+        // Todo if use stream make a util convert iterator to stream
+        // Todo Extract to method named stringFromCell and function with parameter excelSheet
 
         for (Row row : excelSheet) {
             excelTable.add(new ArrayList<>());
             for (int cellIndex = 0; cellIndex <= lastColumnIndex; cellIndex++) {
-                String cellAsString = formatter.formatCellValue(row.getCell(cellIndex));
-                excelTable.get(row.getRowNum()).add(cellAsString);
+                excelTable.get(row.getRowNum())
+                        .add(getStringFromCell(row.getCell(cellIndex)));
             }
         }
 
         return excelTable;
+    }
+
+    // todo new function
+    private static String getStringFromCell(Cell cell) {
+        return new DataFormatter().formatCellValue(cell);
     }
 
     public static List<Worker> getExcelFileAsWorkersList(File file) throws IOException, InvalidFormatException {
