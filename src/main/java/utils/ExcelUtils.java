@@ -56,13 +56,12 @@ public class ExcelUtils {
                                                       int maximumSecondsToWait) throws InterruptedException, TimeoutException {
         long timeWhenEnteredFunctionInMillis = currentTimeMillis();
 
-        while (!isExcelFileDownloadFinished(numberOfExcelFilesInDownloadsDirectoryBeforeDownload) &&
-                !isMaximumTimeInFunctionPassed(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
+        while (!isExcelFileDownloadFinished(numberOfExcelFilesInDownloadsDirectoryBeforeDownload)) {
             Thread.sleep(MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP);
-        }
 
-        if (isMaximumTimeInFunctionPassed(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
-            throw new TimeoutException("Maximum time timed out in waitUntilExcelFileIsDownloaded");
+            if (isMaximumTimeInFunctionPassed(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
+                throw new TimeoutException("Maximum time timed out in waitUntilExcelFileIsDownloaded");
+            }
         }
     }
 

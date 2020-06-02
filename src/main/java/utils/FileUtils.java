@@ -17,13 +17,13 @@ public class FileUtils {
     public static File waitForFileToExist(String filePath, int maximumSecondsToWait) throws InterruptedException, TimeoutException {
         File file = new File(filePath);
         long timeWhenEnteredFunctionInMillis = currentTimeMillis();
-        while (!file.exists() &&
-                !isMaximumTimeInFunctionPassed(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
-            Thread.sleep(MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP);
-        }
 
-        if (isMaximumTimeInFunctionPassed(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
-            throw new TimeoutException("Timed out in waitForDownloadToStart");
+        while (!file.exists()) {
+            Thread.sleep(MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP);
+
+            if (isMaximumTimeInFunctionPassed(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
+                throw new TimeoutException("Timed out in waitForFileToExist");
+            }
         }
 
         return file;
