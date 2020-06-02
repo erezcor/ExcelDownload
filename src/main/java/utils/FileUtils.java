@@ -7,20 +7,20 @@ import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.System.currentTimeMillis;
+import static java.lang.Thread.sleep;
 import static java.util.Comparator.comparingLong;
 import static java.util.stream.Collectors.toList;
 import static utils.TimeoutUtils.isMaximumTimeInFunctionPassed;
 
 public class FileUtils {
     // Todo: the name should be meaningful name that express the action it involved
-    private static int MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP = 500;
+    private static int WAIT_MILLISECONDS_WHEN_FILE_NOT_EXISTS = 500;
 
     public static File waitForFileToExist(String filePath, int maximumSecondsToWait) throws InterruptedException, TimeoutException {
         File file = new File(filePath);
         long timeWhenEnteredFunctionInMillis = currentTimeMillis();
         while (!file.exists()) {
-            // Can use static import for sleep?
-            Thread.sleep(MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP);
+            sleep(WAIT_MILLISECONDS_WHEN_FILE_NOT_EXISTS);
 
             if (isMaximumTimeInFunctionPassed(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
                 throw new TimeoutException("Timed out in waitForDownloadToStart");
