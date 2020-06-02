@@ -1,0 +1,14 @@
+
+e
+java:S2095 "JUse try-with-resources or close this "XSSFWorkbook" in a "finally" clause.(„¤”Çøÿÿÿÿ
+‡
+java:S3008"qRename this field "MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢ıª•
+P
+java:S1118":Add a private constructor to hide the implicit public one.(µŠÂÜ
+`
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(ÿ˜Ñÿÿÿÿÿ
+`
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(•Š¡şÿÿÿÿ
+y
+java:S3008"^Rename this field "HEADLINES_ROW_INDEX" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±¤ÊÎüÿÿÿÿ
+t	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(•Š¡şÿÿÿÿ

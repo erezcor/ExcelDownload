@@ -55,5 +55,7 @@ public class FileUtils {
         // the last index can be extracted to method and then is the var needed for the list
         int lastFileIndex = filesSortedByDate.size() - 1;
         return filesSortedByDate.get(lastFileIndex);
+
+        //   return sortFilesByDate(getFilesByExtensionFrom(folderPath, extension)).get();
     }
 }

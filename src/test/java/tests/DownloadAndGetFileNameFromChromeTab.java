@@ -24,7 +24,7 @@ public class DownloadAndGetFileNameFromChromeTab extends BaseTest {
     int MAXIMUM_SECONDS_TO_WAIT = 10;
     int HEADLINES_ROW_INDEX = 0;
     int FIRST_NAME_COLUMN_INDEX = 1;
-
+// TODO: Delete
     @Test
     public void downloadExcelAndGetFileNameFromChrome() throws IOException, InvalidFormatException, InterruptedException, TimeoutException {
         driver.findElement(By.cssSelector(DOWNLOAD_BUTTON_SELECTOR)).click();

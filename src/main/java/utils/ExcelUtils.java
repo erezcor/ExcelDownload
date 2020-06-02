@@ -32,7 +32,8 @@ public class ExcelUtils {
         XSSFSheet excelSheet = new XSSFWorkbook(file).getSheetAt(FIRST_SHEET_INDEX);
 
         int lastColumnIndex = excelSheet.getRow(HEADLINES_ROW_INDEX).getLastCellNum() - 1;
-// Can it be converted to stream
+        // if use stream make a util convert iterator to stream
+        // Extract to method named stringFromCell and get excel sheet
 
         for (Row row : excelSheet) {
             excelTable.add(new ArrayList<>());

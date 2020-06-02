@@ -32,7 +32,7 @@ public class DownloadWithoutKnowingFileName extends BaseTest {
 
         assertThat(excelTable.get(HEADLINES_ROW_INDEX).get(FIRST_NAME_COLUMN_INDEX), is("First Name"));
         assertThat(workersList.get(HEADLINES_ROW_INDEX).getFirstName(), is("First Name"));
-
+    // add assert for soldier details that was created before, make it a method
         excelFile.deleteOnExit();
     }
 }
