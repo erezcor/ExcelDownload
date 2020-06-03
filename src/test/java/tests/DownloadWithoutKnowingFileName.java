@@ -5,7 +5,6 @@ import exceptions.TimeoutException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import utils.ExcelUtils;
 
 import java.io.File;
 import java.io.IOException;

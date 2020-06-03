@@ -1,6 +1,5 @@
 package utils;
 
-import entities.Worker;
 import exceptions.TimeoutException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -32,8 +31,6 @@ public class ExcelUtils {
 
     public static List<List<String>> getExcelFileAsStringLists(File file) throws IOException, InvalidFormatException {
         return getDataFromExcelSheet(new XSSFWorkbook(file).getSheetAt(FIRST_SHEET_INDEX));
-        // todo make function to get last element from list
-        // Todo if use stream make a util convert iterator to stream
     }
 
     private static List<List<String>> getDataFromExcelSheet(XSSFSheet excelSheet) {
