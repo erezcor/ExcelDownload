@@ -10,9 +10,9 @@ public enum  workerTableColumns {
     DATE (6),
     ID (7);
 
-    int columnIndex;
+    public int INDEX;
 
     workerTableColumns(int index) {
-        this.columnIndex = index;
+        this.INDEX = index;
     }
 }
