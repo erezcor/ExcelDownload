@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Getter
@@ -31,5 +32,20 @@ public class Worker {
                 workerDetails.get(LAST_NAME_INDEX), workerDetails.get(GENDER_INDEX),
                 workerDetails.get(COUNTRY_INDEX), workerDetails.get(AGE_INDEX),
                 workerDetails.get(DATE_INDEX), workerDetails.get(ID_INDEX));
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Worker)) return false;
+        Worker worker = (Worker) object;
+        return Objects.equals(serialNumber, worker.serialNumber) &&
+                Objects.equals(firstName, worker.firstName) &&
+                Objects.equals(lastName, worker.lastName) &&
+                Objects.equals(gender, worker.gender) &&
+                Objects.equals(country, worker.country) &&
+                Objects.equals(age, worker.age) &&
+                Objects.equals(date, worker.date) &&
+                Objects.equals(id, worker.id);
     }
 }
