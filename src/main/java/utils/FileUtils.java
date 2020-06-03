@@ -1,50 +1,46 @@
 package utils;
 
+import exceptions.TimeoutException;
+
 import java.io.File;
-import java.io.FileFilter;
 import java.util.Arrays;
 import java.util.List;
 
-import static constants.SystemConstants.DOWNLOAD_FOLDER_PATH;
+import static java.lang.System.currentTimeMillis;
 import static java.util.Comparator.comparingLong;
 import static java.util.stream.Collectors.toList;
-import static utils.TimeoutUtils.waitWhile;
+import static utils.TimeoutUtils.isMaximumTimeInFunctionPassed;
 
 public class FileUtils {
-    private final static String CHROME_DOWNLOAD_EXTENSION = "crdownload";
-    private final static int ZERO_FILES_DOWNLOADING = 0;
+    private static int MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP = 500;
 
-    public static void waitForFileToExist(String filePath, int maximumSecondsToWait) throws InterruptedException {
+    public static File waitForFileToExist(String filePath, int maximumSecondsToWait) throws InterruptedException, TimeoutException {
         File file = new File(filePath);
-        waitWhile(!file.exists(), maximumSecondsToWait);
+        long timeWhenEnteredFunctionInMillis = currentTimeMillis();
+
+        while (!file.exists()) {
+            Thread.sleep(MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP);
+
+            if (isMaximumTimeInFunctionPassed(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
+                throw new TimeoutException("Timed out in waitForFileToExist");
+            }
+        }
+
+        return file;
     }
 
-    public static void waitForDownloadToStart(int maximumSecondsToWait) throws InterruptedException {
-        waitWhile(!didFileDownloadStart(), maximumSecondsToWait);
+    protected static int getNumberOfFilesByExtensionFrom(String folderPath, String extension) {
+        return getFilesByExtensionFrom(folderPath, extension).size();
     }
 
-    public static void waitForDownloadsToFinish(int maximumSecondsToWait) throws InterruptedException {
-        waitWhile(!didFilesDownloadFinish(), maximumSecondsToWait);
+    protected static List<File> getFilesByExtensionFrom(String folderPath, String extension) {
+        return getAllFilesFromDirectory(folderPath).stream()
+                .filter(file -> file.getName().endsWith(extension))
+                .collect(toList());
     }
 
-    private static boolean didFilesDownloadFinish() {
-        return getNumberOfFilesDownloading() == ZERO_FILES_DOWNLOADING;
-    }
-
-    private static boolean didFileDownloadStart() {
-        return getNumberOfFilesDownloading() > ZERO_FILES_DOWNLOADING;
-    }
-
-    private static int getNumberOfFilesDownloading() {
-        return getFilesByExtensionFrom(DOWNLOAD_FOLDER_PATH, CHROME_DOWNLOAD_EXTENSION).size();
-    }
-
-    private static List<File> getFilesByExtensionFrom(String folderPath, String extension) {
-        return Arrays.asList(new File(folderPath).listFiles(filterFilesByExtension(extension)));
-    }
-
-    private static FileFilter filterFilesByExtension(String extension) {
-        return file -> file.getName().endsWith(extension);
+    protected static List<File> getAllFilesFromDirectory(String folderPath) {
+        return Arrays.asList(new File(folderPath).listFiles());
     }
 
     private static List<File> sortFilesByDate(List<File> files) {
@@ -55,9 +51,5 @@ public class FileUtils {
         List<File> filesSortedByDate = sortFilesByDate(getFilesByExtensionFrom(folderPath, extension));
         int lastFileIndex = filesSortedByDate.size() - 1;
         return filesSortedByDate.get(lastFileIndex);
-    }
-
-    public static void deleteFileAt(String filePath) {
-        new File(filePath).delete();
     }
 }
