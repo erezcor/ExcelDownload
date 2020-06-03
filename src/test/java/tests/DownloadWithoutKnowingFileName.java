@@ -33,7 +33,7 @@ public class DownloadWithoutKnowingFileName extends BaseTest {
         File excelFile = getLatestExcelFileDownloaded();
         List<Worker> workersList = getWorkersListFromExcelFile(excelFile);
 
-        assertThat(getHeadlinesRowStrings(excelFile).get(FIRST_NAME.INDEX), is("First Name"));
+        assertThat(getHeadlinesRowAsStringList(excelFile).get(FIRST_NAME.INDEX), is("First Name"));
         assertThat(getWorkerFromListByID(workerInTable.getId(), workersList), is(workerInTable));
 
         excelFile.deleteOnExit();

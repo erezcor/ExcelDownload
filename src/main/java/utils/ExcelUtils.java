@@ -54,7 +54,7 @@ public class ExcelUtils {
         return excelSheet.getRow(HEADLINES_ROW_INDEX).getLastCellNum() - 1;
     }
 
-    public static List<String> getHeadlinesRowStrings(File file) throws IOException, InvalidFormatException {
+    public static List<String> getHeadlinesRowAsStringList(File file) throws IOException, InvalidFormatException {
         return getExcelFileAsStringLists(file).get(HEADLINES_ROW_INDEX);
     }
 
