@@ -30,8 +30,6 @@ public class ExcelUtils {
     private final static int HEADLINES_ROW_INDEX = 0;
     private final static String excelFileExtension = "xlsx";
 
-    private final static int SKIP_HEADLINES_ROW = 1;
-
     public static List<List<String>> getExcelFileAsStringLists(File file) throws IOException, InvalidFormatException {
         return getDataFromExcelSheet(new XSSFWorkbook(file).getSheetAt(FIRST_SHEET_INDEX));
         // todo make function to get last element from list
@@ -61,10 +59,6 @@ public class ExcelUtils {
 
     public static List<String> getHeadlinesRowStrings(File file) throws IOException, InvalidFormatException {
         return getExcelFileAsStringLists(file).get(HEADLINES_ROW_INDEX);
-    }
-
-    public static List<Worker> getExcelFileAsWorkersList(File file) throws IOException, InvalidFormatException {
-        return getExcelFileAsStringLists(file).stream().skip(SKIP_HEADLINES_ROW).map(Worker::new).collect(toList());
     }
 
     public static File getLatestExcelFileDownloaded() {

@@ -16,10 +16,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static utils.ExcelUtils.*;
 import static utils.WorkerUtils.getWorkerFromListByID;
+import static utils.WorkerUtils.getWorkersListFromExcelFile;
 
 public class DownloadWithoutKnowingFileName extends BaseTest {
     int MAXIMUM_SECONDS_TO_WAIT_FOR_EXCEL_DOWNLOAD = 10;
-    int HEADLINES_ROW_INDEX = 0;
 
     Worker workerInTable = new Worker("1", "Dulce", "Abril", "Female",
             "United States", "32", "15/10/2017", "1562");
@@ -32,9 +32,9 @@ public class DownloadWithoutKnowingFileName extends BaseTest {
 
         waitUntilExcelFileIsDownloaded(numberOfExcelFilesBeforeDownload, MAXIMUM_SECONDS_TO_WAIT_FOR_EXCEL_DOWNLOAD);
         File excelFile = getLatestExcelFileDownloaded();
-        List<Worker> workersList = getExcelFileAsWorkersList(excelFile);
+        List<Worker> workersList = getWorkersListFromExcelFile(excelFile);
 
-        assertThat(ExcelUtils.getHeadlinesRowStrings(excelFile).get(FIRST_NAME.INDEX), is("First Name"));
+        assertThat(getHeadlinesRowStrings(excelFile).get(FIRST_NAME.INDEX), is("First Name"));
         assertThat(getWorkerFromListByID(workerInTable.getId(), workersList), is(workerInTable));
 
         excelFile.deleteOnExit();
