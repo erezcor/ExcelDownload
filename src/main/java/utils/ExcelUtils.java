@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static constants.SystemConstants.DOWNLOADS_DIRECTORY_PATH;
+import static constants.systemConstants.DOWNLOADS_DIRECTORY_PATH;
 import static java.lang.System.currentTimeMillis;
 import static java.util.stream.Collectors.toList;
 import static utils.FileUtils.getLatestFileFromFolderByExtension;
