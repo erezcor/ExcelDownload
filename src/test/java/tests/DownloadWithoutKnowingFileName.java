@@ -19,7 +19,7 @@ import static utils.WorkerUtils.getWorkerFromListByID;
 import static utils.WorkerUtils.getWorkersListFromExcelFile;
 
 public class DownloadWithoutKnowingFileName extends BaseTest {
-    int MAXIMUM_SECONDS_TO_WAIT_FOR_EXCEL_DOWNLOAD = 10;
+    int MAXIMUM_SECONDS_TO_WAIT_FOR_EXCEL_DOWNLOAD = 15;
 
     Worker workerInTable = new Worker("1", "Dulce", "Abril", "Female",
             "United States", "32", "15/10/2017", "1562");
