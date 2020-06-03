@@ -19,19 +19,21 @@ public class DownloadWithoutKnowingFileName extends BaseTest {
     int HEADLINES_ROW_INDEX = 0;
     int FIRST_NAME_COLUMN_INDEX = 1;
 
+    Worker workerInTable = new Worker("1", "Dulce", "Abril", "Female",
+            "United States", "32", "15/10/2017", "1562");
+    int workerRowIndex = 1;
+
     @Test
     public void downloadExcelWithoutKnowingFileName() throws InterruptedException, IOException, InvalidFormatException, TimeoutException {
         int numberOfExcelFilesBeforeDownload = getNumberOfExcelFilesInDownloadsDirectory();
         driver.findElement(By.cssSelector(DOWNLOAD_BUTTON_SELECTOR)).click();
 
         waitUntilExcelFileIsDownloaded(numberOfExcelFilesBeforeDownload, MAXIMUM_SECONDS_TO_WAIT);
-
         File excelFile = getLatestExcelFileDownloaded();
-        List<List<String>> excelTable = getExcelFileAsStringLists(excelFile);
         List<Worker> workersList = getExcelFileAsWorkersList(excelFile);
 
-        assertThat(excelTable.get(HEADLINES_ROW_INDEX).get(FIRST_NAME_COLUMN_INDEX), is("First Name"));
         assertThat(workersList.get(HEADLINES_ROW_INDEX).getFirstName(), is("First Name"));
+        assertThat(workersList.get(workerRowIndex), is(workerInTable));
 
         excelFile.deleteOnExit();
     }
