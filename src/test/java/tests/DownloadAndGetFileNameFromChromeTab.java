@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static constants.SystemConstants.DOWNLOADS_DIRECTORY_PATH;
+import static constants.systemConstants.DOWNLOADS_DIRECTORY_PATH;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static utils.ExcelUtils.getExcelFileAsStringLists;
