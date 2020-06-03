@@ -5,7 +5,10 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class TimeoutUtils {
     protected static boolean isMaximumTimeInFunctionPassed(Long timeWhenEnteredFunctionInMillis, int maximumTimeInSeconds) {
-        long timePassedInSeconds = MILLISECONDS.toSeconds(currentTimeMillis() - timeWhenEnteredFunctionInMillis);
-        return timePassedInSeconds > maximumTimeInSeconds;
+        return getTimePassedInSeconds(timeWhenEnteredFunctionInMillis) > maximumTimeInSeconds;
+    }
+
+    private static long getTimePassedInSeconds(Long timeWhenEnteredFunctionInMillis) {
+        return MILLISECONDS.toSeconds(currentTimeMillis() - timeWhenEnteredFunctionInMillis);
     }
 }

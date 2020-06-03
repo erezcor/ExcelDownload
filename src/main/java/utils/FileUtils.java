@@ -7,19 +7,21 @@ import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.System.currentTimeMillis;
+import static java.lang.Thread.*;
 import static java.util.Comparator.comparingLong;
 import static java.util.stream.Collectors.toList;
+import static utils.ListUtils.getLastElementFromList;
 import static utils.TimeoutUtils.isMaximumTimeInFunctionPassed;
 
 public class FileUtils {
-    private static int MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP = 500;
+    private static int WAIT_MILLISECONDS_WHILE_FILE_DOESNT_EXIST = 500;
 
     public static File waitForFileToExist(String filePath, int maximumSecondsToWait) throws InterruptedException, TimeoutException {
         File file = new File(filePath);
         long timeWhenEnteredFunctionInMillis = currentTimeMillis();
 
         while (!file.exists()) {
-            Thread.sleep(MILLISECONDS_TO_WAIT_BETWEEN_EACH_LOOP);
+            sleep(WAIT_MILLISECONDS_WHILE_FILE_DOESNT_EXIST);
 
             if (isMaximumTimeInFunctionPassed(timeWhenEnteredFunctionInMillis, maximumSecondsToWait)) {
                 throw new TimeoutException("Timed out in waitForFileToExist");
@@ -49,7 +51,6 @@ public class FileUtils {
 
     protected static File getLatestFileFromFolderByExtension(String folderPath, String extension) {
         List<File> filesSortedByDate = sortFilesByDate(getFilesByExtensionFrom(folderPath, extension));
-        int lastFileIndex = filesSortedByDate.size() - 1;
-        return filesSortedByDate.get(lastFileIndex);
+        return getLastElementFromList(filesSortedByDate);
     }
 }
